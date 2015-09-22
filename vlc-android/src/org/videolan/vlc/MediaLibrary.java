@@ -108,6 +108,7 @@ public class MediaLibrary {
         if (mLoadingThread == null || mLoadingThread.getState() == State.TERMINATED) {
             isStopping = false;
             Util.actionScanStart();
+            // 开启线程进行加载》GetMediaItemsRunnable()
             mLoadingThread = new Thread(new GetMediaItemsRunnable());
             mLoadingThread.start();
         }

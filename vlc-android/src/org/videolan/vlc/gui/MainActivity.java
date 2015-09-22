@@ -90,7 +90,7 @@ public class MainActivity extends AudioPlayerContainerActivity implements OnItem
     private static final int ACTIVITY_HIDE_PROGRESSBAR = 4;
     private static final int ACTIVITY_SHOW_TEXTINFO = 5;
 
-    MediaLibrary mMediaLibrary;
+    MediaLibrary mMediaLibrary;//媒体库
 
     private SidebarAdapter mSidebarAdapter;
     private HackyDrawerLayout mDrawerLayout;
@@ -136,7 +136,8 @@ public class MainActivity extends AudioPlayerContainerActivity implements OnItem
 
         mMediaLibrary = MediaLibrary.getInstance();
         if (savedInstanceState == null) { // means first creation, savedInstanceState is not null after rotation
-        /* Load media items from database and storage */
+            /* Load media items from database and storage */
+            /* 媒体库加载 */
             mMediaLibrary.loadMediaItems();
         }
 

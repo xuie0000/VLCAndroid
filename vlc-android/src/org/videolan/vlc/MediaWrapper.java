@@ -20,22 +20,21 @@
 
 package org.videolan.vlc;
 
-import java.io.File;
-import java.util.Locale;
-
-import org.videolan.libvlc.MediaPlayer;
-import org.videolan.libvlc.util.AndroidUtil;
-import org.videolan.libvlc.util.Extensions;
-import org.videolan.libvlc.Media;
-import org.videolan.libvlc.Media.VideoTrack;
-import org.videolan.libvlc.Media.Meta;
-
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
+
+import org.videolan.libvlc.Media;
+import org.videolan.libvlc.Media.Meta;
+import org.videolan.libvlc.Media.VideoTrack;
+import org.videolan.libvlc.MediaPlayer;
+import org.videolan.libvlc.util.Extensions;
+
+import java.io.UnsupportedEncodingException;
+import java.util.Locale;
 
 public class MediaWrapper implements Parcelable {
     public final static String TAG = "VLC/MediaWrapper";
@@ -219,11 +218,49 @@ public class MediaWrapper implements Parcelable {
                 mDiscNumber = Integer.parseInt(discNumber);
             } catch (NumberFormatException ignored) {}
         }
+
+        mTitle = tryUnicodeToGBK(mTitle);
+        mArtist = tryUnicodeToGBK(mArtist);
+        mGenre = tryUnicodeToGBK(mGenre);
+        mAlbum = tryUnicodeToGBK(mAlbum);
+
         Log.d(TAG, "Title " + mTitle);
         Log.d(TAG, "Artist " + mArtist);
         Log.d(TAG, "Genre " + mGenre);
         Log.d(TAG, "Album " + mAlbum);
     }
+
+    /**
+     * xuie0000@163.com add
+     * 添加将内容转换为UTF-8格式
+     */
+
+    /**
+     * 尝试将转换字符乱码
+     * http://blog.csdn.net/kuangren_01/article/details/10552227
+     * @param oldString
+     * @return
+     */
+    private String tryUnicodeToGBK(String oldString) {
+        if (oldString == null)
+            return oldString;
+
+        String newString;
+        try {
+            newString = new String(oldString.getBytes("iso-8859-1"), "gbk");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            newString = oldString;
+        }
+
+        if (newString.indexOf("?") == -1){
+            return newString;
+        } else {
+            return oldString;
+        }
+
+    }
+    // add end
 
     public void updateMeta(MediaPlayer mediaPlayer) {
         final Media media = mediaPlayer.getMedia();

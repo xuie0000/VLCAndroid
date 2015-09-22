@@ -73,12 +73,12 @@ tasks.withType(BuildNative){
         environment 'ANDROID_SDK', properties.getProperty('sdk.dir')
     }
     workingDir '..'
-    commandLine './compile-libvlc.sh'
+//    commandLine './compile-libvlc.sh'
 }
 
-task buildDebugARMv5(type:BuildNative) {
-    args('-a', "armeabi-v5")
-}
+//task buildDebugARMv5(type:BuildNative) {
+//    args('-a', "armeabi-v5")
+//}
 task buildDebugARMv6(type:BuildNative) {
     args('-a', "armeabi")
 }
