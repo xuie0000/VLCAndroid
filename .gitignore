@@ -35,7 +35,7 @@ java-libs/appcompat/.project
 *.iml
 
 #gradle
-gradle.properties
+#gradle.properties
 gradlew.bat
 gradlew
 gradle/wrapper/
